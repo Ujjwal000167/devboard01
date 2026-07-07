@@ -38,6 +38,6 @@ jobs:
             - name: build and push docker image
               uses: docker/build-push-action@v4
               with: 
-                context: ./frontend/Dockerfile.multistage
+                context: ./frontend/Dockerfile
                 push: true
                 tags: ${{ vars.DOCKER_USERNAME }}/frontend:latest    
