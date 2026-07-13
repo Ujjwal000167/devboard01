@@ -2,8 +2,7 @@ name: end to end pipline with security
 
 on: 
     push: 
-        branches: [master]
-
+        
 jobs: 
     code-qualiy: 
         uses: ./.github/workflows/code-quality.yml        
