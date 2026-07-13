@@ -5,9 +5,9 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 
-# Install vite explicitly
+# Install vite explicitly if not already in package.json
 RUN npm list vite > /dev/null 2>&1 || npm install --no-save vite@5.4.11
 
 COPY . .
@@ -19,9 +19,6 @@ FROM dhi.io/node:26
 
 WORKDIR /app
 
-# Create non-root user for runtime
-RUN groupadd -r appuser && useradd -r -g appuser appuser
-
 # Copy built files from builder
 COPY --from=build /app/dist ./dist
 
@@ -30,13 +27,7 @@ COPY --from=build /app/node_modules ./node_modules
 
 COPY vite.preview.config.js ./vite.config.js
 
-# Fix ownership to non-root user
-RUN chown -R appuser:appuser /app
-
 EXPOSE 4173
-
-# Switch to non-root user
-USER appuser
 
 # Use exec form for proper signal handling
 ENTRYPOINT ["node", "--no-warnings"]
