@@ -17,7 +17,7 @@ jobs:
               with: 
                 dockerfile: ${{ matrix.image}}/Dockerfile
 
-            - name: docker setup 
+            - name: docker login
               uses: docker/login-action@v2
               with: 
                 username: ${{ secrets.DOCKER_USERNAME }}
