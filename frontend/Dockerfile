@@ -14,13 +14,13 @@ COPY . .
 
 RUN npm run build
 
+# Create non-root user in build stage
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
 # Stage 2 — distroless runtime (minimal, secure)
 FROM dhi.io/node:24-alpine
 
 WORKDIR /app
-
-# Create non-root user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 # Copy built files from builder
 COPY --from=build /app/dist ./dist
@@ -30,8 +30,9 @@ COPY --from=build /app/node_modules ./node_modules
 
 COPY vite.preview.config.js ./vite.config.js
 
-# Fix ownership to non-root user
-RUN chown -R appuser:appuser /app
+# Copy user from build stage
+COPY --from=build /etc/passwd /etc/passwd
+COPY --from=build /etc/group /etc/group
 
 EXPOSE 4173
 
