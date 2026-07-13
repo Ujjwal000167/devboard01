@@ -6,6 +6,6 @@ on:
 
 jobs: 
     code-qualiy: 
-        uses: ./.github/workflows/code-quality.yml
-        
+        uses: ./.github/workflows/code-quality.yml        
           
+
