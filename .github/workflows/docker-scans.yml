@@ -1,4 +1,4 @@
-#this is fo rscanning the docker file
+#this is fo rscanning the docker file and images for vulnerabilities
 name: Docker Scan
 on: 
     workflow_call: 
