@@ -1,0 +1,45 @@
+# for sast of my process
+name: Code Quality
+
+on: 
+    workflow_call:
+
+jobs: 
+    frontend:
+        runs-on: ubuntu-latest
+        steps:
+            - name: codecheckout
+              uses: actions/checkout@v2
+
+            - name: setup node
+              uses: actions/setup-node@v6
+
+              with:
+                node-version: 20
+                cache: npm
+                cache-dependency-path: frontend/package-lock.json
+            - name: install packages
+              run: npm install --legacy-peer-deps
+              working-directory: frontend
+             
+            - name: run linting
+              run: npm run lint
+              working-directory: frontend
+              
+            - name: setup go
+              uses: actions/setup-go@v6
+              with:
+                go-version: 1.23
+                go-version-file: 'go.mod'
+                check-latest: false
+                cache: true
+                cache-dependency-path: backend/go.sum
+           
+            - name: run fmt
+              run: go fmt
+              working-directory: backend
+
+            - name: run vet
+              run: go vet
+              working-directory: backend  
+             
