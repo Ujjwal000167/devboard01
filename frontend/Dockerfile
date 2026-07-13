@@ -7,7 +7,7 @@ COPY package*.json ./
 
 RUN npm ci --legacy-peer-deps
 
-# Install vite explicitly
+# Install vite explicitly if not already in package.json
 RUN npm list vite > /dev/null 2>&1 || npm install --no-save vite@5.4.11
 
 COPY . .
@@ -19,7 +19,7 @@ FROM dhi.io/node:24-alpine
 
 WORKDIR /app
 
-# Create non-root user for runtime
+# Create non-root user
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 # Copy built files from builder
