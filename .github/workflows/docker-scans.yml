@@ -1,0 +1,19 @@
+#this is fo rscanning the docker file
+name: Docker Scan
+on: 
+    workflow_call: 
+jobs: 
+    docker-scan: 
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                image: [ "frontend", "backend" ]
+        steps: 
+            - name: code checkout
+              uses: actions/checkout@v7
+              
+            - name: hadolint scan 
+              uses: hadolint/hadolint-action@v3.1.0
+              with: 
+                dockerfile: ${{ matrix.image}}/Dockerfile
+                            
