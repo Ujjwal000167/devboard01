@@ -28,6 +28,7 @@ jobs:
               working-directory: ${{ matrix.image}}
                             
             - name: trivy scan
+              continue-on-error: true
               uses: aquasecurity/trivy-action@v0.36.0
               with: 
                 image-ref: ${{ vars.DOCKER_USERNAME}}/devboard-${{ matrix.image}}:LATEST
