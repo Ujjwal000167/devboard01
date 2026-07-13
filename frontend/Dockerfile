@@ -1,5 +1,5 @@
 # Stage 1 — build the app
-FROM dhi.io/node:24-alpine-dev AS build
+FROM dhi.io/node:22-debian13-dev AS build
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2 — distroless runtime (minimal, secure)
-FROM dhi.io/node:24-alpine
+FROM dhi.io/node:22-debian13
 
 WORKDIR /app
 
