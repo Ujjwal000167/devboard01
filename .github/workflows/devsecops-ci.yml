@@ -12,3 +12,5 @@ jobs:
         uses: ./.github/workflows/git-leaks.yml    
           
 
+    dependency-scan:
+        uses: ./.github/workflows/dependency-scan.yml
